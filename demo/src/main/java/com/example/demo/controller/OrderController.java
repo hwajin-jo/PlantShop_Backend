@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,39 +103,5 @@ public class OrderController {
 		}
 	}
 	
-	@GetMapping("/order/modify/{oid}")
-	public ResponseEntity<Order> orderDetail(@PathVariable("oid") Long oid){
-		Optional<Order> order = orderRepository.findById(oid);
-		if(order.isPresent()) {
-			order.get().setOstatus(order.get().getOstatus());
-			order.get().setOid(order.get().getOid());
-			order.get().setPid(order.get().getPid());
-			order.get().setPimg1(order.get().getPimg1());
-			order.get().setPprice(order.get().getPprice());
-			order.get().setPname(order.get().getPname());
-			return new ResponseEntity<>(order.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PutMapping("/order/modify/{oid}")
-	public ResponseEntity<Order> noticeModify(@PathVariable("oid") Long oid, @RequestBody Order order) {
-		
-			Optional<Order> orderData = orderRepository.findById(oid);
-			if(orderData.isPresent()) {
-				Order newOrder = orderData.get();
-				newOrder.setOstatus(order.getOstatus());
-				newOrder.setPid(order.getPid());
-				newOrder.setPname(order.getPname());
-				newOrder.setPprice(order.getPprice());
-				newOrder.setOtotal(order.getOtotal());
-				newOrder.setPimg1(order.getPimg1());
-				return new ResponseEntity<>(orderRepository.save(newOrder), HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-		
-	}
 	
 }

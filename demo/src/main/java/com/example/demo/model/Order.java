@@ -7,9 +7,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import lombok.Getter;
@@ -19,7 +16,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "orders")
 @Setter @Getter
-@DynamicInsert @DynamicUpdate
 public class Order {
 
 	@Id
@@ -33,14 +29,14 @@ public class Order {
 	@JoinColumn(name = "pname")
 	private String pname; // 상품명
 	
-	//@JoinColumn(name = "pprice")
-	private String pprice;
+	@JoinColumn(name = "pprice")
+	private Integer pprice; // 상품 가격
 	
 	@JoinColumn(name = "pstock")
 	private Integer pstock; // 상품 갯수
 	
-	//@JoinColumn(name = "pid")
-	private String pid;
+	@JoinColumn(name = "pid")
+	private Integer pid; // 상품 아이디
 	
 	@JoinColumn(name = "pimg1")
 	private String pimg1; // 상품 이미지
@@ -65,7 +61,7 @@ public class Order {
 	
 	private Integer ototal;
 	
-	@Column(columnDefinition = "varchar(50) default '결제완료'")
+	@Column(columnDefinition = "VARCHAR(20) default '결제완료'")
 	private String ostatus;//주문 상태
 	
 	private LocalDate odate; //주문일
@@ -79,7 +75,7 @@ public class Order {
 //	}
 	
 	public Order(String oname, Integer ocount, String oaddress, String ophone, String opost, String opayment,
-			LocalDate odate, String pname, Integer ototal,String pprice, Integer pstock, String pid, String ostatus,String pimg1, String username) {
+			LocalDate odate, String pname, Integer ototal,Integer pprice, Integer pstock, Integer pid, String ostatus,String pimg1, String username) {
 		this.oname = oname;
 		this.ocount = ocount;
 		this.oaddress = oaddress;
@@ -98,7 +94,7 @@ public class Order {
 	}
 	
 	public Order(String oname, Integer ocount, String oaddress, String ophone, String opost, String opayment,
-			LocalDate odate, String pname, String pprice) {
+			LocalDate odate, String pname, Integer pprice) {
 		this.oname = oname;
 		this.ocount = ocount;
 		this.oaddress = oaddress;
@@ -111,7 +107,7 @@ public class Order {
 		this.pprice = pprice;
 	}
 	
-	public Order(String pid, String pname, String pprice,Integer ototal, Integer ocount, String pimg1,LocalDate odate,String username) {
+	public Order(Integer pid, String pname, Integer pprice,Integer ototal, Integer ocount, String pimg1,LocalDate odate,String username) {
 		this.pid = pid;
 		this.pname = pname;
 		this.pprice = pprice;
